@@ -24,13 +24,13 @@ pipeline {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh 'go get ./...'
-                sh 'docker-build . -t rapando/pipelinetests'
+                sh 'go build -o $PWD/pipelinetests main.go'
             }
         }
         stage('run') {
         steps {
             echo 'RUN STAGE'
-            sh 'docker run rapando/pipelinetests'
+            sh 'go run $PWD/pipelinetests'
         }
         }
     }
