@@ -1,7 +1,8 @@
 pipeline {
     agent any
     tools {
-        go 'Go'
+        go 'go'
+        docker 'docker'
     }
     environment {
         GO118MODULE = 'on'
