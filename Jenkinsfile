@@ -1,5 +1,9 @@
 pipeline {
-    agent { docker 'golang:1.18.4-alpine' }
+    agent any
+    tools {
+        go 'go'
+        dockerTool 'docker'
+    }
     environment {
         GO118MODULE = 'on'
         CGO_ENABLED = 0
@@ -23,13 +27,13 @@ pipeline {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh 'go get ./...'
-                sh 'go build -o $PWD/pipelinetests main.go'
+                sh 'docker-build . -t rapando/pipelinetests'
             }
         }
         stage('run') {
         steps {
             echo 'RUN STAGE'
-            sh 'go run $PWD/pipelinetests'
+            sh 'docker run rapando/pipelinetests'
         }
         }
     }
