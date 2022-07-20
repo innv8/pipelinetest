@@ -1,7 +1,9 @@
 package main
 
+import "fmt"
+
 func main() {
-	fmt.Println("Hello World")
+	fmt.Printf("Hello World. Double 2 is %d\n", DoubleValue(2))
 }
 
 func DoubleValue(n int) int {
