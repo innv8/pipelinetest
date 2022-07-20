@@ -1,9 +1,5 @@
 pipeline {
-    agent any
-    tools {
-        go 'go'
-        dockerTool 'docker'
-    }
+    agent { docker { image 'golang:1.17.5-alpine' } }
     environment {
         GO118MODULE = 'on'
         CGO_ENABLED = 0
@@ -14,8 +10,8 @@ pipeline {
             steps {
                 sh 'which go'
                 sh '$(which go) version'
-                sh 'ls -lh'
-                sh 'pwd'
+                sh 'ls -lh $PWD'
+                sh 'echo $PWD'
             }
         }
         stage("unit-test") {
@@ -35,13 +31,13 @@ pipeline {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh 'go get ./...'
-                sh 'docker-build . -t rapando/pipelinetests'
+                sh 'go build -o $PWD/pipelinetests'
             }
         }
         stage('run') {
         steps {
             echo 'RUN STAGE'
-            sh 'docker run rapando/pipelinetests'
+            sh '$PWD/pipelinetests'
         }
         }
     }
