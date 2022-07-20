@@ -10,9 +10,7 @@
          stage('check installations') {
              steps {
                  echo 'Just checking installation'
-                 sh 'make --version'
-                 sh 'docker version'
-                 sh 'go version'
+
              }
          }
      }
