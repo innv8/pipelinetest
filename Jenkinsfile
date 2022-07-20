@@ -35,5 +35,6 @@ pipeline {
             echo 'RUN STAGE'
             sh 'docker run rapando/pipelinetests'
         }
+        }
     }
 }
