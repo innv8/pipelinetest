@@ -1,8 +1,8 @@
  pipeline {
      agent any
      tools {
-         go 'Go'
-         docker 'Docker'
+         go 'go'
+         docker 'docker'
      }
      stages {
          stage("hello-world") {
