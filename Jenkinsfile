@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        go 'which go'
+        go 'go'
         dockerTool 'docker'
     }
     environment {
@@ -13,7 +13,7 @@ pipeline {
         stage('get-go-location'){
             steps {
                 sh 'which go'
-                sh 'go version'
+                sh '$(which go) version'
                 sh 'ls -lh'
                 sh 'pwd'
             }
