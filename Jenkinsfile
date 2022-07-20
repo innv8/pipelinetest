@@ -1,9 +1,6 @@
 pipeline {
     agent any
-    tools {
-        go 'go'
-        dockerTool 'docker'
-    }
+   agent { docker 'golang:1.18.4-alpine' }
     environment {
         GO118MODULE = 'on'
         CGO_ENABLED = 0
