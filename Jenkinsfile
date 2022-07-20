@@ -13,6 +13,9 @@ pipeline {
         stage('get-go-location'){
             steps {
                 sh 'which go'
+                sh 'go version'
+                sh 'ls -lh'
+                sh 'pwd'
             }
         }
         stage("unit-test") {
