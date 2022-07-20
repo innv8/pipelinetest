@@ -13,13 +13,13 @@ pipeline {
         stage("unit-test") {
             steps {
                 echo 'UNIT TEST EXECUTION STARTED'
-                sh 'make unit-tests'
+                sh 'go test ./...'
             }
         }
         stage('functional-tests') {
             steps {
                 echo 'FUNCIONAL TEST EXECUTION STARTED'
-                sh 'make functional-tests'
+                sh 'go test ./...'
             }
         }
         stage('build') {
@@ -27,8 +27,13 @@ pipeline {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh 'go get ./...'
-                dh 'docker-build . -t rapando/pipelinetests'
+                sh 'docker-build . -t rapando/pipelinetests'
             }
+        }
+        stage('run') {
+        steps {
+            echo 'RUN STAGE'
+            sh 'docker run rapando/pipelinetests'
         }
     }
 }
