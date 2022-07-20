@@ -13,6 +13,7 @@ pipeline {
         stage('get-go-location'){
             steps {
                 sh 'which go'
+                sh 'alias go=$(which go)'
                 sh 'go version'
                 sh 'ls -lh'
                 sh 'pwd'
