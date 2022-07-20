@@ -1,48 +1,16 @@
 pipeline {
     agent any
-    tools {
-        go 'go'
-        dockerTool 'docker'
-    }
-    environment {
-        GO118MODULE = 'on'
-        CGO_ENABLED = 0
-        GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
-    }
     stages {
-        stage('get-go-location'){
+        stage('Test Build Stage') {
             steps {
-                sh 'which go'
-                sh '$(which go) version'
-                sh 'ls -lh'
-                sh 'pwd'
+                script {
+                    def root = tool name: '1.8.3', type: go
+                     withEnv(["GOPATH=${env.WORKSPACE}/go", "GOROOT=${root}", "GOBIN=${root}/bin", "PATH+GO=${root}/bin"]) {
+                        sh "mkdir -p ${env.WORKSPACE}/go/src"
+                        sh 'go version'
+                     }
+                }
             }
-        }
-        stage("unit-test") {
-            steps {
-                echo 'UNIT TEST EXECUTION STARTED'
-                sh 'go test ./...'
-            }
-        }
-        stage('functional-tests') {
-            steps {
-                echo 'FUNCIONAL TEST EXECUTION STARTED'
-                sh 'go test ./...'
-            }
-        }
-        stage('build') {
-            steps {
-                echo 'BUILD EXECUTION STARTED'
-                sh 'go version'
-                sh 'go get ./...'
-                sh 'docker-build . -t rapando/pipelinetests'
-            }
-        }
-        stage('run') {
-        steps {
-            echo 'RUN STAGE'
-            sh 'docker run rapando/pipelinetests'
-        }
         }
     }
 }
