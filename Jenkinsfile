@@ -10,6 +10,11 @@ pipeline {
         GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
     }
     stages {
+        stage('get-go-location'){
+            steps {
+                sh 'which go'
+            }
+        }
         stage("unit-test") {
             steps {
                 echo 'UNIT TEST EXECUTION STARTED'
